@@ -1,7 +1,8 @@
 package imagga.colors;
 
 
-import imagga.colors.dto.ColorsResponseDto;
+import imagga.colors.dto.*;
+import imagga.colors.dto.ColorInfo;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -26,15 +27,22 @@ public class ColorsAppl {
 
         RequestEntity<String> request = new RequestEntity<>(headers, HttpMethod.GET, url);
         ResponseEntity<ColorsResponseDto> response = restTemplate.exchange(request, ColorsResponseDto.class);
-        printColor(response.getBody().getResult().getColors().getBackground_colors());
+
+        ColorsDto colors = response.getBody().getResult().getColors();
+
+        printColor("Background colors", colors.getBackground_colors());
+        printColor("Foreground Colors", colors.getForeground_colors());
+        printColor("Image Colors", colors.getImage_colors());
+
 
     }
 
-    private static void printColor(List<BackgroundColors> colors) {
-        System.out.println("-------------------");
+    private static void printColor(String title, List<? extends ColorInfo> colors) {
+        System.out.println("\n" + title + ":");
+        System.out.println("-------------------------------------------------------------");
         System.out.printf("%-25s %-25s %-15s%n", "color name", "parent color name", "coverage percent");
-        System.out.println("-------------------");
-        for (BackgroundColors color : colors) {
+        System.out.println("-------------------------------------------------------------");
+        for (ColorInfo  color : colors) {
             System.out.printf("%-25s %-25s %-15.2f%n",
                     color.getClosest_palette_color(),
                     color.getClosest_palette_color_parent(),
