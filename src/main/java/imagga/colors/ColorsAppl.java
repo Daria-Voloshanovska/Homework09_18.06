@@ -2,7 +2,7 @@ package imagga.colors;
 
 
 import imagga.colors.dto.*;
-import imagga.colors.dto.ColorInfo;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -37,12 +37,12 @@ public class ColorsAppl {
 
     }
 
-    private static void printColor(String title, List<? extends ColorInfo> colors) {
+    private static void printColor(String title, List<ColorsInfo> colors) {
         System.out.println("\n" + title + ":");
         System.out.println("-------------------------------------------------------------");
         System.out.printf("%-25s %-25s %-15s%n", "color name", "parent color name", "coverage percent");
         System.out.println("-------------------------------------------------------------");
-        for (ColorInfo  color : colors) {
+        for (ColorsInfo  color : colors) {
             System.out.printf("%-25s %-25s %-15.2f%n",
                     color.getClosest_palette_color(),
                     color.getClosest_palette_color_parent(),
